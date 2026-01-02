@@ -228,7 +228,9 @@ function ContactForm() {
     name: "",
     email: "",
     message: "",
+    website: "", // Honeypot field
   });
+  const [formStartTime] = useState(Date.now()); // Temps de début pour détecter les soumissions trop rapides
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null;
@@ -259,21 +261,31 @@ function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          website: formData.website, // Honeypot
+          submitTime: formStartTime, // Temps de début du formulaire
+        }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        // Gestion spéciale pour le rate limiting
+        if (response.status === 429) {
+          throw new Error(data.error || "Trop de tentatives. Veuillez patienter quelques minutes avant de réessayer.");
+        }
         throw new Error(data.error || "Une erreur est survenue");
       }
 
       // Succès
       setSubmitStatus({
         type: "success",
-        message: "Message envoyé avec succès ! Je vous répondrai bientôt.",
+        message: "Message envoyé.",
       });
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", message: "", website: "" });
     } catch (error) {
       setSubmitStatus({
         type: "error",
@@ -331,6 +343,20 @@ function ContactForm() {
               required
               disabled={isSubmitting}
               className="w-full px-6 py-4 bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-white/5 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 focus:outline-none focus:border-gray-900 dark:focus:border-white/20 focus:ring-0 transition-apple resize-none text-lg font-light disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          {/* Honeypot field - caché pour les humains, visible pour les bots */}
+          <div style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }} aria-hidden="true">
+            <label htmlFor="website">Ne pas remplir ce champ</label>
+            <input
+              type="text"
+              id="website"
+              name="website"
+              value={formData.website}
+              onChange={handleChange}
+              tabIndex={-1}
+              autoComplete="off"
             />
           </div>
 
