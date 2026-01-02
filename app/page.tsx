@@ -43,7 +43,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center min-h-[80vh] text-center">
             <div className="w-full space-y-6 md:space-y-8">
               <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-anton text-gray-900 dark:text-white leading-[1.05] tracking-tight transition-colors duration-300">
-                Thomas Foltzer
+                THOMAS FOLTZER
               </h1>
               
               <p className="mt-8 md:mt-12 max-w-2xl mx-auto text-gray-600 dark:text-gray-300 text-xl md:text-2xl leading-relaxed font-light transition-colors duration-300">
@@ -94,7 +94,7 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
             {/* Projet SportTracker */}
-            <div className="group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 hover:shadow-2xl transition-apple">
+            <div className="group relative overflow-hidden rounded-3xl bg-gray-200 dark:bg-gray-900 border border-gray-200 dark:border-white/10 hover:shadow-2xl transition-apple">
               <div className="relative h-80 md:h-96 overflow-hidden bg-gray-100 dark:bg-gray-800">
                 <img
                   src="/images/projects/sporttracker.png"
@@ -107,9 +107,7 @@ export default function Home() {
                   <h3 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">Sport Tracker</h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg font-light transition-colors duration-300">
-                  Application mobile de suivi sportif permettant de gérer ses séances d&apos;entraînement, 
-                  suivre ses statistiques et défier ses amis. Interface intuitive avec suivi en temps réel 
-                  des performances.
+                  Application mobile de suivi sportif pour gérer ses séances, suivre ses statistiques et défier ses amis.
                 </p>
                 <div className="flex flex-wrap gap-2 mb-8">
                   <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-300 text-sm rounded-full font-light transition-colors duration-300">
@@ -140,7 +138,7 @@ export default function Home() {
             </div>
 
             {/* Projet Maillemum.fr */}
-            <div className="group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 hover:shadow-2xl transition-apple">
+            <div className="group relative overflow-hidden rounded-3xl bg-gray-200 dark:bg-gray-900 border border-gray-200 dark:border-white/10 hover:shadow-2xl transition-apple">
               <div className="relative h-80 md:h-96 overflow-hidden bg-gray-100 dark:bg-gray-800">
                 <img
                   src="/images/projects/maillemum.png"
@@ -153,10 +151,7 @@ export default function Home() {
                   <h3 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">Maillemum.fr</h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg font-light transition-colors duration-300">
-                  Site e-commerce complet pour articles tricotés à la main. Interface épurée mettant en valeur 
-                  les créations artisanales avec système de filtres, gestion de panier et compte utilisateur. 
-                  Backoffice admin complet pour la création d&apos;articles, gestion des commandes et système 
-                  de paiement sécurisé avec Stripe.
+                  Site e-commerce pour articles tricotés à la main avec système de filtres, panier et backoffice admin. Paiement sécurisé avec Stripe.
                 </p>
                 <div className="flex flex-wrap gap-2 mb-8">
                   <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-300 text-sm rounded-full font-light transition-colors duration-300">
@@ -240,21 +235,21 @@ export default function Home() {
               <input
                 type="text"
                 placeholder="Votre nom"
-                className="w-full px-6 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-gray-900 dark:focus:border-white/30 focus:ring-0 transition-apple text-lg font-light"
+                className="w-full px-6 py-4 bg-gray-200 dark:bg-gray-900 border border-gray-300 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-gray-900 dark:focus:border-white/30 focus:ring-0 transition-apple text-lg font-light"
               />
             </div>
             <div className="group">
               <input
                 type="email"
                 placeholder="Votre email"
-                className="w-full px-6 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-gray-900 dark:focus:border-white/30 focus:ring-0 transition-apple text-lg font-light"
+                className="w-full px-6 py-4 bg-gray-200 dark:bg-gray-900 border border-gray-300 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-gray-900 dark:focus:border-white/30 focus:ring-0 transition-apple text-lg font-light"
               />
             </div>
             <div className="group">
               <textarea
                 placeholder="Votre message"
                 rows={6}
-                className="w-full px-6 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-gray-900 dark:focus:border-white/30 focus:ring-0 transition-apple resize-none text-lg font-light"
+                className="w-full px-6 py-4 bg-gray-200 dark:bg-gray-900 border border-gray-300 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-gray-900 dark:focus:border-white/30 focus:ring-0 transition-apple resize-none text-lg font-light"
               />
             </div>
             <button
