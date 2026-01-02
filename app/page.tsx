@@ -122,16 +122,10 @@ export default function Home() {
                 </div>
                 <div className="flex gap-4">
                   <a
-                    href="#"
+                    href="https://sport-tracker-sepia.vercel.app/"
                     className="px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-apple text-sm"
                   >
-                    Voir le projet
-                  </a>
-                  <a
-                    href="#"
-                    className="px-6 py-3 border border-gray-300 dark:border-white/20 text-gray-700 dark:text-white/70 rounded-full font-medium hover:bg-gray-50 dark:hover:bg-white/5 transition-apple text-sm"
-                  >
-                    Code source
+                    Voir
                   </a>
                 </div>
               </div>
@@ -177,13 +171,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-apple text-sm"
                   >
-                    Visiter le site
-                  </a>
-                  <a
-                    href="#"
-                    className="px-6 py-3 border border-gray-300 dark:border-white/20 text-gray-700 dark:text-white/70 rounded-full font-medium hover:bg-gray-50 dark:hover:bg-white/5 transition-apple text-sm"
-                  >
-                    Code source
+                    Voir
                   </a>
                 </div>
               </div>
