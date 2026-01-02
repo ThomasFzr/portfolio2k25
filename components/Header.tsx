@@ -132,14 +132,14 @@ export default function Header() {
             }
             whitespace-nowrap
             ${isScrolled ? "px-4 py-2 md:px-6 md:py-2.5 shadow-2xl" : "px-3 py-1.5 md:px-4 md:py-2"}
-            ${isScrolled ? "dark:shadow-black/20 shadow-gray-200/20" : ""}
+            ${isScrolled ? "shadow-black/20" : ""}
             rounded-full
           `}
           style={{
             transform: 'translate3d(0, 0, 0)',
             willChange: isUnlocked ? 'width, max-width, padding' : 'auto',
-            backgroundColor: isDark ? 'rgba(0, 0, 0, 0.8)' : 'rgba(243, 244, 246, 0.8)',
-            borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+            backgroundColor: 'rgba(0, 0, 0, 0.8)', // Toujours dark
+            borderColor: 'rgba(255, 255, 255, 0.1)' // Toujours dark
           }}
         >
           {/* Contenu masqué au début - apparaît pendant le déverrouillage */}
@@ -158,7 +158,7 @@ export default function Header() {
           {/* Bouton de thème intégré */}
           <button
             onClick={toggleTheme}
-            className="flex items-center justify-center w-6 h-6 md:w-7 md:h-7 rounded-full transition-all duration-200 ease-out text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"
+            className="flex items-center justify-center w-6 h-6 md:w-7 md:h-7 rounded-full transition-all duration-200 ease-out text-white hover:bg-white/10"
             aria-label="Basculer entre le mode sombre et clair"
           >
             <svg
@@ -190,7 +190,7 @@ export default function Header() {
           </button>
 
           {/* Séparateur */}
-          <div className="h-4 md:h-5 w-px bg-gray-400 dark:bg-white/20" />
+          <div className="h-4 md:h-5 w-px bg-white/20" />
 
           {/* Liens de navigation */}
           <ul className="flex items-center gap-1 md:gap-2">
@@ -209,15 +209,15 @@ export default function Header() {
                       text-[10px] md:text-xs lg:text-sm font-medium
                       transition-all duration-200 ease-out
                       ${isActive
-                        ? "bg-gray-200 dark:bg-white/20 text-gray-900 dark:text-white"
-                        : "text-gray-700 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10"
+                        ? "bg-white/20 text-white"
+                        : "text-white/70 hover:text-white hover:bg-white/10"
                       }
                     `}
                   >
                     <span className="relative z-10">{item.name}</span>
                     {isActive && (
                       <span 
-                        className="absolute inset-0 bg-gray-300/50 dark:bg-white/10 rounded-full blur-sm animate-pulse-subtle"
+                        className="absolute inset-0 bg-white/10 rounded-full blur-sm animate-pulse-subtle"
                       />
                     )}
                   </a>
