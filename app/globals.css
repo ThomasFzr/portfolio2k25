@@ -14,9 +14,6 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-html {
   background-color: #fbfbfd;
   transition: background-color 0.2s ease;
 }
@@ -35,8 +32,7 @@ body {
   font-weight: 400;
   letter-spacing: -0.011em;
   transition: background-color 0.2s ease, color 0.2s ease;
-  margin: 0;
-  padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 .dark body {
@@ -44,15 +40,13 @@ body {
   color: #f5f5f7;
 }
 
-/* Effet de grain subtil - désactivé pour style Apple épuré */
-
-/* Scrollbar personnalisée */
+/* --- SCROLLBAR PERSONNALISÉE --- */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #fbfbfd;
+  background: transparent;
 }
 
 .dark ::-webkit-scrollbar-track {
@@ -76,7 +70,7 @@ body {
   background: #4a4a4c;
 }
 
-/* Animations */
+/* --- ANIMATIONS GÉNÉRALES (GARDÉES POUR LE CONTENU) --- */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -100,246 +94,38 @@ body {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
-  }
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
 }
 
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-/* Animation Dynamic Island - État verrouillé (petit comme iPhone) */
-@keyframes dynamicIslandLocked {
-  0%, 100% {
-    width: 110px;
-    max-width: 110px;
-    padding: 6px 12px;
-  }
-}
-
-@media (max-width: 768px) {
-  @keyframes dynamicIslandLocked {
-    0%, 100% {
-      width: 100px;
-      max-width: 100px;
-      padding: 5px 10px;
-    }
-  }
-}
-
-/* Animation Dynamic Island - Déverrouillage (ultra-optimisé) */
-@keyframes dynamicIslandUnlock {
-  0% {
-    width: 110px;
-    max-width: 110px;
-    padding: 6px 12px;
-  }
-  15% {
-    width: 110px;
-    max-width: 110px;
-    padding: 6px 12px;
-  }
-  100% {
-    width: auto;
-    max-width: none;
-    padding: 0.5rem 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  @keyframes dynamicIslandUnlock {
-    0% {
-      width: 100px;
-      max-width: 100px;
-      padding: 5px 10px;
-    }
-    15% {
-      width: 100px;
-      max-width: 100px;
-      padding: 5px 10px;
-    }
-    100% {
-      width: auto;
-      max-width: none;
-      padding: 0.375rem 0.75rem;
-    }
-  }
-}
-
+/* --- CLASSES UTILITAIRES D'ANIMATION --- */
 .animate-fade-in-up {
   animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  opacity: 1 !important;
 }
 
 .animate-fade-in-scale {
   animation: fadeInScale 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-.animate-fade-in {
-  animation: fadeIn 1s ease-out;
-}
-
-.animate-slide-in-left {
-  animation: slideInLeft 0.8s ease-out;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.8s ease-out;
-}
-
 .animate-float {
   animation: float 6s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 3s ease infinite;
 }
 
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-dynamic-island-locked {
-  width: 110px;
-  max-width: 110px;
-  padding: 6px 12px;
-  overflow: hidden;
-  transform: translate3d(0, 0, 0);
-}
-
-.animate-dynamic-island-unlock {
-  animation: dynamicIslandUnlock 1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-  overflow: hidden;
-  transform: translate3d(0, 0, 0);
-  will-change: width, max-width, padding;
-  contain: layout style paint;
-}
-
-/* Transitions douces style Apple */
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.transition-slow {
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.transition-apple {
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* Effet de survol pour les liens */
-.hover-underline {
-  position: relative;
-  display: inline-block;
-}
-
-.hover-underline::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background-color: #60a5fa;
-  transition: width 0.3s ease;
-}
-
-.hover-underline:hover::after {
-  width: 100%;
-}
-
-/* Effet de glow sur les éléments */
-.glow-effect {
-  position: relative;
-}
-
-.glow-effect::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.glow-effect:hover::before {
-  opacity: 1;
-}
-
-/* Gradient text */
+/* --- EFFETS VISUELS --- */
 .gradient-text {
   background: linear-gradient(135deg, #ffffff 0%, #60a5fa 100%);
   -webkit-background-clip: text;
@@ -347,41 +133,12 @@ body {
   background-clip: text;
 }
 
-/* Effet de ligne animée */
-.animated-line {
-  position: relative;
-  overflow: hidden;
-}
-
-.animated-line::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-/* Carte avec effet 3D */
+/* Effet 3D sur les cartes (Optionnel) */
 .card-3d {
   transform-style: preserve-3d;
   transition: transform 0.3s ease;
 }
 
 .card-3d:hover {
-  transform: translateY(-10px) rotateX(5deg);
+  transform: translateY(-5px);
 }
-
-
-
