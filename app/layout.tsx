@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anton } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LockProvider } from "@/components/LockProvider";
 
 const anton = Anton({
   weight: "400",
@@ -47,7 +48,9 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider>
-          {children}
+          <LockProvider>
+            {children}
+          </LockProvider>
         </ThemeProvider>
       </body>
     </html>

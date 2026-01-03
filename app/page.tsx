@@ -3,11 +3,36 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
+import { useLock } from "@/components/LockProvider";
 
 export default function Home() {
+  const { isUnlocked, unlock } = useLock();
+
   const handleScrollDown = () => {
+    if (!isUnlocked) return;
     window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
   };
+
+  // Désactiver le scroll si le cadenas est verrouillé
+  useEffect(() => {
+    if (!isUnlocked) {
+      document.body.style.overflow = "hidden";
+      // Empêcher le scroll avec la molette/touchpad
+      const preventScroll = (e: WheelEvent | TouchEvent) => {
+        e.preventDefault();
+      };
+      window.addEventListener("wheel", preventScroll, { passive: false });
+      window.addEventListener("touchmove", preventScroll, { passive: false });
+      
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("wheel", preventScroll);
+        window.removeEventListener("touchmove", preventScroll);
+      };
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [isUnlocked]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,10 +59,10 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen relative bg-[#fbfbfd] dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-300">
+    <>
       <Header />
-      
-      {/* Section Hero */}
+      <main className="min-h-screen relative bg-[#fbfbfd] dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-300">
+        {/* Section Hero */}
       <section id="home" className="min-h-screen relative flex items-center justify-center pt-20 overflow-hidden">
         <div className="relative z-10 w-full max-w-6xl mx-auto px-8 md:px-12">
           <div className="flex flex-col items-center justify-center min-h-[80vh] text-center">
@@ -53,27 +78,42 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Indicateur de défilement */}
+        {/* Indicateur de défilement / Bouton de déverrouillage */}
         <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-fade-in" style={{ animationDelay: "0.5s" }}>
-          <button
-            onClick={handleScrollDown}
-            className="w-12 h-12 rounded-full border border-gray-300 dark:border-white/20 flex items-center justify-center hover:border-gray-400 dark:hover:border-white/40 hover:bg-gray-50 dark:hover:bg-white/5 transition-apple group"
-            aria-label="Défiler vers le bas"
-          >
-            <svg
-              className="w-5 h-5 text-gray-600 dark:text-white/70 group-hover:translate-y-1 transition-apple"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <div className="flex flex-col items-center">
+            <button
+              onClick={!isUnlocked ? unlock : handleScrollDown}
+              className="w-12 h-12 rounded-full border border-gray-300 dark:border-white/20 flex items-center justify-center hover:border-gray-400 dark:hover:border-white/40 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-500 group cursor-pointer"
+              aria-label={!isUnlocked ? "Déverrouiller" : "Défiler vers le bas"}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
+              <svg
+                className={`w-5 h-5 text-gray-600 dark:text-white/70 transition-all duration-500 ${
+                  !isUnlocked 
+                    ? 'group-hover:translate-x-1' 
+                    : 'rotate-90 group-hover:translate-y-1'
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                style={{
+                  transform: !isUnlocked ? 'rotate(0deg)' : 'rotate(90deg)',
+                  transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+            {!isUnlocked && (
+              <p className="absolute top-14 text-sm md:text-base text-gray-600 dark:text-gray-400 font-light animate-pulse whitespace-nowrap">
+                Cliquer pour déverrouiller
+              </p>
+            )}
+          </div>
         </div>
       </section>
 
@@ -178,8 +218,9 @@ export default function Home() {
       {/* Section Contact */}
       <ContactForm />
 
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </>
   );
 }
 

@@ -2,33 +2,50 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
+import { useLock } from "./LockProvider";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   
-  // 0: Initial
+  // 0: Initial (verrouillé)
   // 1: Ouverture Cadenas
   // 2: Expansion
   // 3: Texte
   const [animationStep, setAnimationStep] = useState(0);
   
   const { theme, toggleTheme } = useTheme();
+  const { isUnlocked } = useLock();
 
   useEffect(() => {
-    // --- TIMING ---
+    if (!isUnlocked) {
+      // Le cadenas reste verrouillé (animationStep = 0)
+      return;
+    }
+
+    // --- TIMING D'ANIMATION AU DÉVERROUILLAGE ---
     const timer1 = setTimeout(() => {
       setAnimationStep(1); 
-    }, 200);
+    }, 100);
 
     const timer2 = setTimeout(() => {
       setAnimationStep(2); 
-    }, 600); 
+    }, 500); 
 
     const timer3 = setTimeout(() => {
       setAnimationStep(3); 
-      sessionStorage.setItem("dynamicIslandUnlocked", "true");
-    }, 800); 
+    }, 700); 
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
+  }, [isUnlocked]);
+
+  // Gérer le scroll séparément pour qu'il fonctionne toujours
+  useEffect(() => {
+    if (!isUnlocked) return;
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -45,12 +62,9 @@ export default function Header() {
     
     window.addEventListener("scroll", handleScroll);
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isUnlocked]);
 
   const navItems = [
     { name: "Accueil", href: "#home", id: "home" },
@@ -70,7 +84,18 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50 flex items-center justify-center pointer-events-none">
+    <header 
+      className="fixed top-4 left-0 right-0 z-[9999] flex items-center justify-center pointer-events-none"
+      style={{ 
+        position: 'fixed', 
+        top: '1rem', 
+        left: 0, 
+        right: 0, 
+        zIndex: 9999,
+        willChange: 'transform',
+        pointerEvents: 'none'
+      }}
+    >
       <nav
         className={`
           pointer-events-auto relative flex items-center justify-center
