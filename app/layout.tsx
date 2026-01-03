@@ -12,8 +12,38 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Portfolio sobre et épuré",
+  title: "Thomas Foltzer - Développeur Full Stack",
+  description: "Portfolio sobre et épuré de Thomas Foltzer, développeur Full Stack",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  openGraph: {
+    title: "Thomas Foltzer - Développeur Full Stack",
+    description: "Portfolio sobre et épuré de Thomas Foltzer, développeur Full Stack",
+    url: "https://thomasfoltzer.com",
+    siteName: "Thomas Foltzer",
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Thomas Foltzer - Développeur Full Stack',
+      },
+    ],
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Thomas Foltzer - Développeur Full Stack",
+    description: "Portfolio sobre et épuré de Thomas Foltzer, développeur Full Stack",
+    images: ['/og-image.png'],
+  },
 };
 
 export default function RootLayout({
