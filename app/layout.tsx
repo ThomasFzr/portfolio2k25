@@ -11,7 +11,7 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio 2025",
+  title: "Portfolio",
   description: "Portfolio sobre et épuré",
 };
 

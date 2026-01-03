@@ -47,7 +47,7 @@ export default function Home() {
               </h1>
               
               <p className="mt-8 md:mt-12 max-w-2xl mx-auto text-gray-600 dark:text-gray-400 text-xl md:text-2xl leading-relaxed font-light transition-colors duration-300">
-                Créateur d&apos;expériences digitales exceptionnelles
+                Développeur Full Stack
               </p>
             </div>
           </div>
@@ -107,19 +107,8 @@ export default function Home() {
                   <h3 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white transition-colors duration-300">Sport Tracker</h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed text-lg font-light transition-colors duration-300">
-                  Application mobile de suivi sportif pour gérer ses séances, suivre ses statistiques et défier ses amis.
+                  Site vitrine & Application mobile de suivi sportif pour gérer ses séances, suivre ses statistiques et défier ses amis.
                 </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/5 dark:border dark:border-white/5 text-gray-700 dark:text-gray-400 text-sm rounded-full font-light transition-colors duration-300">
-                    React Native
-                  </span>
-                  <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/5 dark:border dark:border-white/5 text-gray-700 dark:text-gray-400 text-sm rounded-full font-light transition-colors duration-300">
-                    Mobile
-                  </span>
-                  <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/5 dark:border dark:border-white/5 text-gray-700 dark:text-gray-400 text-sm rounded-full font-light transition-colors duration-300">
-                    UI/UX
-                  </span>
-                </div>
                 <div className="flex gap-4">
                   <a
                     href="https://sport-tracker-sepia.vercel.app/"
@@ -147,23 +136,6 @@ export default function Home() {
                 <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed text-lg font-light transition-colors duration-300">
                   Site e-commerce pour articles tricotés à la main avec système de filtres, panier et backoffice admin. Paiement sécurisé avec Stripe.
                 </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/5 dark:border dark:border-white/5 text-gray-700 dark:text-gray-400 text-sm rounded-full font-light transition-colors duration-300">
-                    Next.js
-                  </span>
-                  <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/5 dark:border dark:border-white/5 text-gray-700 dark:text-gray-400 text-sm rounded-full font-light transition-colors duration-300">
-                    Stripe
-                  </span>
-                  <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/5 dark:border dark:border-white/5 text-gray-700 dark:text-gray-400 text-sm rounded-full font-light transition-colors duration-300">
-                    Backend
-                  </span>
-                  <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/5 dark:border dark:border-white/5 text-gray-700 dark:text-gray-400 text-sm rounded-full font-light transition-colors duration-300">
-                    Admin
-                  </span>
-                  <span className="px-4 py-1.5 bg-gray-100 dark:bg-white/5 dark:border dark:border-white/5 text-gray-700 dark:text-gray-400 text-sm rounded-full font-light transition-colors duration-300">
-                    E-commerce
-                  </span>
-                </div>
                 <div className="flex gap-4">
                   <a
                     href="https://maillemum.fr"
