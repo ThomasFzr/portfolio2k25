@@ -13,9 +13,29 @@ export default function Home() {
     window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
   };
 
-  // Désactiver le scroll si le cadenas est verrouillé
+  // Désactiver la restauration automatique de scroll au montage
   useEffect(() => {
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  // Désactiver le scroll si le cadenas est verrouillé et remonter en haut
+  useEffect(() => {
+
     if (!isUnlocked) {
+      // Forcer le scroll en haut immédiatement et après un court délai
+      const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      };
+      
+      scrollToTop();
+      // Répéter après un court délai pour contrer la restauration du navigateur
+      const timeout = setTimeout(scrollToTop, 0);
+      const timeout2 = setTimeout(scrollToTop, 100);
+      
       document.body.style.overflow = "hidden";
       // Empêcher le scroll avec la molette/touchpad
       const preventScroll = (e: WheelEvent | TouchEvent) => {
@@ -25,6 +45,8 @@ export default function Home() {
       window.addEventListener("touchmove", preventScroll, { passive: false });
       
       return () => {
+        clearTimeout(timeout);
+        clearTimeout(timeout2);
         document.body.style.overflow = "";
         window.removeEventListener("wheel", preventScroll);
         window.removeEventListener("touchmove", preventScroll);
@@ -79,7 +101,7 @@ export default function Home() {
         </div>
 
         {/* Indicateur de défilement / Bouton de déverrouillage */}
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-fade-in" style={{ animationDelay: "0.5s" }}>
+        <div className={`${!isUnlocked ? 'fixed' : 'absolute'} bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-fade-in`} style={{ animationDelay: "0.5s" }}>
           <div className="flex flex-col items-center">
             <button
               onClick={!isUnlocked ? unlock : handleScrollDown}
