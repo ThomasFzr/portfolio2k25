@@ -4,20 +4,38 @@ import { useState, useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
 import { useLock } from "./LockProvider";
 
-export default function Header() {
+type HeaderProps = {
+  /** Désactive le cadenas et affiche directement le menu (utile pour le blog) */
+  disableLock?: boolean;
+  /** Id de section active par défaut (ex: "blog" pour les pages de blog) */
+  initialActiveSection?: string;
+  /** Active ou non la détection de section au scroll (inutile sur le blog) */
+  trackSections?: boolean;
+};
+
+export default function Header({
+  disableLock = false,
+  initialActiveSection = "home",
+  trackSections = true,
+}: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState(initialActiveSection);
   
   // 0: Initial (verrouillé)
   // 1: Ouverture Cadenas
   // 2: Expansion
   // 3: Texte
-  const [animationStep, setAnimationStep] = useState(0);
+  const [animationStep, setAnimationStep] = useState(disableLock ? 3 : 0);
   
   const { theme, toggleTheme } = useTheme();
   const { isUnlocked } = useLock();
 
   useEffect(() => {
+    if (disableLock) {
+      setAnimationStep(3);
+      return;
+    }
+
     if (!isUnlocked) {
       // Le cadenas reste verrouillé (animationStep = 0)
       return;
@@ -45,7 +63,8 @@ export default function Header() {
 
   // Gérer le scroll séparément pour qu'il fonctionne toujours
   useEffect(() => {
-    if (!isUnlocked) return;
+    if (!trackSections) return;
+    if (!disableLock && !isUnlocked) return;
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -67,18 +86,36 @@ export default function Header() {
   }, [isUnlocked]);
 
   const navItems = [
-    { name: "Accueil", href: "#home", id: "home" },
-    { name: "Portfolio", href: "#work", id: "work" },
-    { name: "À propos", href: "#about", id: "about" },
-    { name: "Contact", href: "#contact", id: "contact" },
+    { name: "Accueil", href: "#home", id: "home", external: false },
+    { name: "Portfolio", href: "#work", id: "work", external: false },
+    { name: "À propos", href: "#about", id: "about", external: false },
+    { name: "Contact", href: "#contact", id: "contact", external: false },
+    { name: "Blog", href: "/blog", id: "blog", external: true },
   ];
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, external: boolean) => {
+    if (typeof window === "undefined") return;
+
+    // Liens externes (ex: /blog)
+    if (external) {
+      window.location.href = href;
+      return;
+    }
+
+    const isHomePage = window.location.pathname === "/";
+
+    // Si on n'est pas sur la home, on redirige vers la home avec l'ancre
+    if (!isHomePage) {
+      window.location.href = `/${href}`;
+      return;
+    }
+
+    // Sur la home, on fait un scroll fluide vers la section
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
   const getContainerSize = () => {
-    if (animationStep < 2) return "w-[40px] h-[40px] px-0"; 
+    if (!disableLock && animationStep < 2) return "w-[40px] h-[40px] px-0"; 
     if (isScrolled) return "w-auto h-auto px-6 py-2.5";
     return "w-auto h-auto px-4 py-2"; 
   };
@@ -131,7 +168,12 @@ export default function Header() {
               <li key={item.name}>
                 <a
                   href={item.href}
-                  onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
+                  onClick={(e) => { 
+                    if (!item.external) {
+                      e.preventDefault(); 
+                    }
+                    handleNavClick(item.href, item.external); 
+                  }}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     activeSection === item.id ? "bg-white/20 text-white" : "text-white/70 hover:text-white hover:bg-white/10"
                   }`}
@@ -144,30 +186,32 @@ export default function Header() {
         </div>
 
         {/* --- CADENAS ANIMÉ FACE ID --- */}
-        <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
-            animationStep >= 2 ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}>
-          <svg width="18" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
-            {/* J'ai supprimé toutes les classes Tailwind (rotate-*, transition-*, etc.) 
-               pour utiliser du CSS pur via `style`. 
-               - transformOrigin: '17px 11px' force le pivot en bas à droite.
-               - transformBox: 'view-box' force le navigateur à utiliser les coordonnées SVG.
-            */}
-            <path 
-              d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
-              style={{
-                transformOrigin: '17px 11px',
-                transformBox: 'view-box',
-                transform: animationStep >= 1 ? 'rotate(20deg)' : 'rotate(0deg)',
-                transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' // Petit rebond mécanique
-              }}
-            />
-            <rect x="4" y="11" width="16" height="11" rx="2" fill="currentColor" />
-          </svg>
-        </div>
+        {!disableLock && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
+              animationStep >= 2 ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}>
+            <svg width="18" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
+              {/* J'ai supprimé toutes les classes Tailwind (rotate-*, transition-*, etc.) 
+                pour utiliser du CSS pur via \`style\`. 
+                - transformOrigin: '17px 11px' force le pivot en bas à droite.
+                - transformBox: 'view-box' force le navigateur à utiliser les coordonnées SVG.
+              */}
+              <path 
+                d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" 
+                stroke="currentColor" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                style={{
+                  transformOrigin: '17px 11px',
+                  transformBox: 'view-box',
+                  transform: animationStep >= 1 ? 'rotate(20deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)' // Petit rebond mécanique
+                }}
+              />
+              <rect x="4" y="11" width="16" height="11" rx="2" fill="currentColor" />
+            </svg>
+          </div>
+        )}
       </nav>
     </header>
   );
