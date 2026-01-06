@@ -8,7 +8,7 @@ export default function Footer() {
           </div>
           <div className="flex space-x-8">
             <a
-              href="https://www.linkedin.com/in/thomas-foltzer-9b50002ab/" target='_blank'
+              href="https://www.linkedin.com/in/thomas-foltzer/" target='_blank'
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-apple"
               aria-label="LinkedIn"
             >
