@@ -13,18 +13,22 @@ export default function Home() {
     window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
   };
 
-  // Désactiver la restauration automatique de scroll au montage
+  // Désactiver le scroll si le cadenas est verrouillé et remonter en haut (uniquement au premier chargement)
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
-    }
-  }, []);
+    // Détecter si c'est un refresh en utilisant l'API Performance
+    const navEntries = typeof window !== 'undefined' ? performance.getEntriesByType('navigation') as PerformanceNavigationTiming[] : [];
+    const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
 
-  // Désactiver le scroll si le cadenas est verrouillé et remonter en haut
-  useEffect(() => {
+    // Si c'est un refresh, ne rien faire (pas de scroll forcé, pas de verrouillage)
+    // On laisse le navigateur gérer la position de scroll
+    if (isReload) {
+      // S'assurer que le scroll n'est pas bloqué
+      document.body.style.overflow = "";
+      return;
+    }
 
     if (!isUnlocked) {
-      // Forcer le scroll en haut immédiatement et après un court délai
+      // Premier chargement et verrouillé : forcer le scroll en haut
       const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'instant' });
         document.documentElement.scrollTop = 0;
@@ -56,6 +60,24 @@ export default function Home() {
     }
   }, [isUnlocked]);
 
+  // Scroll vers la section correspondante au hash une fois déverrouillé
+  useEffect(() => {
+    if (!isUnlocked) return;
+
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    if (hash) {
+      // Petit délai pour s'assurer que le DOM est prêt
+      const timer = setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isUnlocked]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -79,6 +101,49 @@ export default function Home() {
       });
     };
   }, []);
+
+  // Mettre à jour l'URL (hash) quand on scroll entre les sections
+  useEffect(() => {
+    if (!isUnlocked) return;
+
+    const handleScroll = () => {
+      const sections = ["home", "work", "about", "contact"];
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const top = element.offsetTop;
+          const bottom = top + element.offsetHeight;
+          
+          if (scrollPosition >= top && scrollPosition < bottom) {
+            const newHash = `#${sectionId}`;
+            // Mettre à jour l'URL sans déclencher de scroll
+            if (window.location.hash !== newHash) {
+              window.history.replaceState(null, '', newHash);
+            }
+            break;
+          }
+        }
+      }
+    };
+
+    // Délai pour éviter trop de mises à jour pendant le scroll
+    let scrollTimeout: NodeJS.Timeout;
+    const throttledHandleScroll = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(handleScroll, 100);
+    };
+
+    window.addEventListener("scroll", throttledHandleScroll, { passive: true });
+    // Appeler une fois au montage pour définir le hash initial
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", throttledHandleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, [isUnlocked]);
 
   return (
     <>

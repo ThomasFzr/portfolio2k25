@@ -28,7 +28,7 @@ export default function Header({
   const [animationStep, setAnimationStep] = useState(disableLock ? 3 : 0);
   
   const { theme, toggleTheme } = useTheme();
-  const { isUnlocked } = useLock();
+  const { isUnlocked, shouldAnimate } = useLock();
 
   useEffect(() => {
     if (disableLock) {
@@ -39,6 +39,11 @@ export default function Header({
     if (!isUnlocked) {
       // Le cadenas reste verrouillé (animationStep = 0)
       return;
+    }
+
+    // Si shouldAnimate est true (refresh), on repart de 0 pour refaire l'animation
+    if (shouldAnimate) {
+      setAnimationStep(0);
     }
 
     // --- TIMING D'ANIMATION AU DÉVERROUILLAGE ---
@@ -59,7 +64,7 @@ export default function Header({
       clearTimeout(timer2);
       clearTimeout(timer3);
     };
-  }, [isUnlocked]);
+  }, [isUnlocked, shouldAnimate, disableLock]);
 
   // Gérer le scroll séparément pour qu'il fonctionne toujours
   useEffect(() => {
