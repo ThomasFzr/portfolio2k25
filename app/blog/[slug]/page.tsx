@@ -23,7 +23,7 @@ export function generateMetadata({ params }: Props): Metadata {
     };
   }
 
-  const url = `https://thomasfoltzer.com/blog/${post.slug}`;
+  const url = `https://www.thomasfoltzer.com/blog/${post.slug}`;
 
   return {
     title: `${post.title} - Blog de Thomas Foltzer`,

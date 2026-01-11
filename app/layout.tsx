@@ -23,12 +23,12 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: 'https://thomasfoltzer.com',
+    canonical: 'https://www.thomasfoltzer.com',
   },
   openGraph: {
     title: "Thomas Foltzer - Développeur Full Stack",
     description: "Portfolio sobre et épuré de Thomas Foltzer, développeur Full Stack",
-    url: "https://thomasfoltzer.com",
+    url: "https://www.thomasfoltzer.com",
     siteName: "Thomas Foltzer",
     images: [
       {
