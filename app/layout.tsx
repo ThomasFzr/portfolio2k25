@@ -22,6 +22,9 @@ export const metadata: Metadata = {
       { url: '/images/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
+  alternates: {
+    canonical: 'https://thomasfoltzer.com',
+  },
   openGraph: {
     title: "Thomas Foltzer - Développeur Full Stack",
     description: "Portfolio sobre et épuré de Thomas Foltzer, développeur Full Stack",
