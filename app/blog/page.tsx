@@ -9,9 +9,9 @@ export default function BlogPage() {
   const posts = getAllPosts();
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-[#fbfbfd] dark:bg-[#0a0a0a] transition-colors duration-300">
       <Header disableLock initialActiveSection="blog" trackSections={false} />
-      <main className="min-h-screen bg-[#fbfbfd] dark:bg-[#0a0a0a] pt-24 px-8 md:px-12 transition-colors duration-300">
+      <main className="flex-1 pt-24 px-8 md:px-12">
         <section className="max-w-5xl mx-auto pb-20">
           <header className="mb-16 text-center">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-anton text-gray-900 dark:text-white tracking-tight">
@@ -79,11 +79,9 @@ export default function BlogPage() {
             ))}
           </div>
         </section>
-        <div className="pb-8">
-          <Footer />
-        </div>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }
 

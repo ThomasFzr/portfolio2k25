@@ -47,9 +47,9 @@ export default function BlogPostPage({ params }: Props) {
 
   if (!post) {
     return (
-      <>
+      <div className="min-h-screen flex flex-col bg-[#fbfbfd] dark:bg-[#0a0a0a] transition-colors duration-300">
         <Header disableLock initialActiveSection="blog" trackSections={false} />
-        <main className="min-h-screen bg-[#fbfbfd] dark:bg-[#0a0a0a] pt-24 pb-24 px-8 md:px-12">
+        <main className="flex-1 pt-24 pb-24 px-8 md:px-12">
           <section className="max-w-3xl mx-auto text-center">
             <h1 className="text-3xl md:text-4xl font-anton text-gray-900 dark:text-white mb-4">
               Article introuvable
@@ -64,16 +64,16 @@ export default function BlogPostPage({ params }: Props) {
               Retour au blog
             </Link>
           </section>
-          <Footer />
         </main>
-      </>
+        <Footer />
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-[#fbfbfd] dark:bg-[#0a0a0a] transition-colors duration-300">
       <Header disableLock initialActiveSection="blog" trackSections={false} />
-      <main className="min-h-screen bg-[#fbfbfd] dark:bg-[#0a0a0a] pt-24 pb-24 px-8 md:px-12 transition-colors duration-300">
+      <main className="flex-1 pt-24 pb-24 px-8 md:px-12">
         <article className="max-w-3xl mx-auto">
           <header className="mb-10">
             <p className="text-sm text-gray-500 dark:text-gray-400 font-light mb-3">
@@ -119,9 +119,9 @@ export default function BlogPostPage({ params }: Props) {
             </Link>
           </div>
         </article>
-        <Footer />
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }
 
