@@ -40,34 +40,20 @@ body {
   color: #f5f5f7;
 }
 
-/* --- SCROLLBAR PERSONNALISÉE --- */
+/* --- SCROLLBAR CACHÉE --- */
+/* Pour Chrome, Safari et Edge */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* Pour Firefox */
+html {
+  scrollbar-width: none;
 }
 
-.dark ::-webkit-scrollbar-track {
-  background: #000000;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d2d2d7;
-  border-radius: 4px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #3a3a3c;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a6;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #4a4a4c;
+/* Pour IE/Edge legacy */
+body {
+  -ms-overflow-style: none;
 }
 
 /* --- ANIMATIONS GÉNÉRALES (GARDÉES POUR LE CONTENU) --- */
