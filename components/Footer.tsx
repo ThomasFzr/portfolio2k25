@@ -6,7 +6,13 @@ export default function Footer() {
           <div className="text-gray-600 dark:text-gray-400 text-sm mb-4 md:mb-0 font-light transition-colors duration-300">
             © {new Date().getFullYear()} Thomas Foltzer. Tous droits réservés.
           </div>
-          <div className="flex space-x-8">
+          <div className="flex items-center space-x-8">
+            <a
+              href="/blog"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-apple text-sm font-medium"
+            >
+              Blog
+            </a>
             <a
               href="https://www.linkedin.com/in/thomas-foltzer/" target='_blank'
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-apple"

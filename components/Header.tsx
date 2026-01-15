@@ -95,7 +95,6 @@ export default function Header({
     { name: "Portfolio", href: "#work", id: "work", external: false },
     { name: "À propos", href: "#about", id: "about", external: false },
     { name: "Contact", href: "#contact", id: "contact", external: false },
-    { name: "Blog", href: "/blog", id: "blog", external: true },
   ];
 
   const handleNavClick = (href: string, external: boolean) => {
