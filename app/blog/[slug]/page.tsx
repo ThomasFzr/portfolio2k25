@@ -3,6 +3,8 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getAllPosts, getPostBySlug } from "@/lib/blogPosts";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 type Props = {
   params: { slug: string };
@@ -103,9 +105,9 @@ export default function BlogPostPage({ params }: Props) {
           </header>
 
           <div className="prose prose-lg prose-neutral dark:prose-invert max-w-none leading-relaxed">
-            {post.content.split("\n\n").map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {post.content}
+            </ReactMarkdown>
           </div>
 
           <div className="mt-12 mb-16">
